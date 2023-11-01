@@ -1,0 +1,2175 @@
+filename,source,size_bytes,logical_lines,source_lines,blank_lines,comment_lines,single_comments,multiline_strings,number_functions,complexity,total_ops,unique_ops,total_operands,unique_operands,vocab,length,calc_length,volume,difficulty,has_class,uses_input,uses_random,effort,id
+recyclebin.py,"from __future__ import print_function
+
+import os  # Load the Module
+
+from _winreg import *  # Load the Module
+
+
+# Script Name		: recyclebin.py
+# Author				: Craig Richards
+# Created				: 07th June 2013
+# Last Modified		:
+# Version				: 1.0
+# Modifications		:
+# Description			: Scans the recyclebin and displays the files in there, originally got this script from the Violent Python book
+
+
+def sid2user(sid):  # Start of the function to gather the user
+    try:
+        key = OpenKey(
+            HKEY_LOCAL_MACHINE,
+            ""SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList"" + ""\\"" + sid,
+        )
+        (value, type) = QueryValueEx(key, ""ProfileImagePath"")
+        user = value.split(""\\"")[-1]
+        return user
+    except Exception:
+        return sid
+
+
+def returnDir():  # Start of the function to search through the recyclebin
+    dirs = [""c:\\Recycler\\"", ""C:\\Recycled\\"", ""C:\\$RECYCLE.BIN\\""]
+    # dirs=['c:\\$RECYCLE.BIN\\']
+    for recycleDir in dirs:
+        if os.path.isdir(recycleDir):
+            return recycleDir
+    return None
+
+
+def findRecycled(
+    recycleDir,
+):  # Start of the function, list the contents of the recyclebin
+    dirList = os.listdir(recycleDir)
+    for sid in dirList:
+        files = os.listdir(recycleDir + sid)
+        user = sid2user(sid)
+
+        print(""\n[*] Listing Files for User: "" + str(user))
+        for file in files:
+            print(""[+] Found File: "" + str(file))
+
+
+def main():
+    recycleDir = returnDir()
+    findRecycled(recycleDir)
+
+
+if __name__ == ""__main__"":
+    main()
+",1550,30,35,15,13,8,0,4.0,9,7,3,13.0,13,16.0,20,52.86060383799767,80.0,1.5,No,False,False,Low,id0
+Reverse_list_in_groups.py,"class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class Reverse_Linked_List:
+    def __init__(self):
+        self.head = None
+
+    def Insert_At_End(self, new_data):
+        new_node = Node(new_data)
+        if self.head is None:
+            self.head = new_node
+            return
+        current = self.head
+        while current.next:
+            current = current.next
+        current.next = new_node
+
+    def Reverse_list_Groups(self, head, k):
+        count = 0
+        previous = None
+        current = head
+        while current is not None and count < k:
+            following = current.next
+            current.next = previous
+            previous = current
+            current = following
+            count += 1
+        if following is not None:
+            head.next = self.Reverse_list_Groups(following, k)
+        return previous
+
+    def Display(self):
+        temp = self.head
+        while temp:
+            print(temp.data, ""->"", end="" "")
+            temp = temp.next
+        print(""None"")
+
+
+if __name__ == ""__main__"":
+    L_list = Reverse_Linked_List()
+    L_list.Insert_At_End(1)
+    L_list.Insert_At_End(2)
+    L_list.Insert_At_End(3)
+    L_list.Insert_At_End(4)
+    L_list.Insert_At_End(5)
+    L_list.Insert_At_End(6)
+    L_list.Insert_At_End(7)
+    L_list.Display()
+    L_list.head = L_list.Reverse_list_Groups(L_list.head, 2)
+    print(""\nReverse Linked List: "")
+    L_list.Display()
+",1507,48,48,7,0,0,0,5.0,16,7,6,14.0,12,,21,58.52932501298082,87.56842503028855,3.5,Yes,False,False,Low,id1
+convert_time.py,"from __future__ import print_function
+
+# Created by sarathkaul on 12/11/19
+
+
+def convert_time(input_str):
+    # Checking if last two elements of time
+    # is AM and first two elements are 12
+    if input_str[-2:] == ""AM"" and input_str[:2] == ""12"":
+        return ""00"" + input_str[2:-2]
+
+    # remove the AM
+    elif input_str[-2:] == ""AM"":
+        return input_str[:-2]
+
+    # Checking if last two elements of time
+    # is PM and first two elements are 12
+    elif input_str[-2:] == ""PM"" and input_str[:2] == ""12"":
+        return input_str[:-2]
+
+    else:
+        # add 12 to hours and remove PM
+        return str(int(input_str[:2]) + 12) + input_str[2:8]
+
+
+if __name__ == ""__main__"":
+    input_time = input(""Enter time you want to convert: "")
+    print(convert_time(input_time))
+",783,17,13,8,7,7,0,1.0,6,17,4,,21,,45,100.23866587835396,208.9735285398626,2.6666666666666665,No,True,False,Low-Medium,id2
+Multiply.py,"def product(a,b):
+     if(a<b):
+         return product(b,a)
+     elif(b!=0):
+         return(a+product(a,b-1))
+     else:
+          return 0
+          
+a=int(input(""Enter first number: ""))
+b=int(input(""Enter second number: ""))
+print(""Product is: "",product(a,b))
+",263,10,10,1,0,0,0,1.0,3,4,4,8.0,5,9.0,12,19.60964047443681,38.03910001730775,3.2,No,True,False,Low,id3
+vowels.py,"print(""\n### Vowel counter ###\n"")
+string = input(""Enter a string: "").lower()
+vowels = [""a"", ""e"", ""i"", ""o"", ""u""]
+
+vowelscounter = 0
+
+
+def checkVowels(letter):
+    for i in range(len(vowels)):
+        if letter == vowels[i]:
+            return True
+    return False
+
+
+for i in range(len(string)):
+    if checkVowels(string[i]):
+        vowelscounter = vowelscounter + 1
+
+print(f""\n### {vowelscounter} vowel(s) were found in the string. ###"")
+",441,13,13,6,0,0,0,1.0,3,2,2,4.0,4,6.0,6,10.0,15.509775004326936,1.0,No,True,False,Low,id4
+Conversation.py,"# imports modules
+import sys
+import time
+from getpass import getuser
+
+# user puts in their name
+name = getuser()
+name_check = input(""Is your name "" + name + ""? â "")
+if name_check.lower().startswith(""y""):
+    print(""Okay."")
+    time.sleep(1)
+
+if name_check.lower().startswith(""n""):
+    name = input(""Then what is it? â "")
+
+# Python lists their name
+userList = name
+
+# Python & user dialoge
+print(""Hello"", name + "", my name is Python."")
+time.sleep(0.8)
+print(""The first letter of your name is"", userList[0] + ""."")
+time.sleep(0.8)
+print(""Nice to meet you. :)"")
+time.sleep(0.8)
+response = input(""Would you say it's nice to meet me? â "")
+
+# other dialoge
+if response.lower().startswith(""y""):
+    print(""Nice :)"")
+    sys.exit()
+
+elif response.lower().startswith(""n""):
+    response2 = input(""Is it because I am a robot? â "")
+
+else:
+    print(""You may have made an input error. Please restart and try again."")
+    sys.exit()
+if response2.lower().startswith(""y""):
+    print(""Aw :("")
+
+elif response2.lower().startswith(""n""):
+    response3 = input(""Then why? â "")
+    time.sleep(1)
+    print(""Oh."")
+
+else:
+    print(""You may have made an input error. Please restart and try again."")
+    sys.exit()
+",1198,35,35,9,5,5,0,0.0,0,4,1,8.0,7,,12,19.651484454403228,36.0,0.5714285714285714,No,True,False,Low,id5
+WikipediaModule.py,"""""""
+Created on Sat Jul 15 01:41:31 2017
+
+@author: Albert
+""""""
+from __future__ import print_function
+
+import wikipedia as wk
+from bs4 import BeautifulSoup
+
+
+def wiki():
+    """"""
+    Search Anything in wikipedia
+    """"""
+
+    word = input(""Wikipedia Search : "")
+    results = wk.search(word)
+    for i in enumerate(results):
+        print(i)
+    try:
+        key = int(input(""Enter the number : ""))
+    except AssertionError:
+        key = int(input(""Please enter corresponding article number : ""))
+
+    page = wk.page(results[key])
+    url = page.url
+    # originalTitle=page.original_title
+    pageId = page.pageid
+    # references=page.references
+    title = page.title
+    # soup=BeautifulSoup(page.content,'lxml')
+    pageLength = input(""""""Wiki Page Type : 1.Full 2.Summary : """""")
+    if pageLength == 1:
+        soup = fullPage(page)
+        print(soup)
+    else:
+        print(title)
+        print(""Page Id = "", pageId)
+        print(page.summary)
+        print(""Page Link = "", url)
+    # print ""References : "",references
+
+    pass
+
+
+def fullPage(page):
+    soup = BeautifulSoup(page.content, ""lxml"")
+    return soup
+
+
+def randomWiki():
+    """"""
+    This function gives you a list of n number of random articles
+    Choose any article.
+    """"""
+    number = input(""No: of Random Pages : "")
+    lst = wk.random(number)
+    for i in enumerate(lst):
+        print(i)
+    try:
+        key = input(""Enter the number : "")
+        assert key >= 0 and key < number
+    except AssertionError:
+        key = input(""Please enter corresponding article number : "")
+
+    page = wk.page(lst[key])
+    url = page.url
+    # originalTitle=page.original_title
+    pageId = page.pageid
+    # references=page.references
+    title = page.title
+    # soup=BeautifulSoup(page.content,'lxml')
+    pageLength = input(""""""Wiki Page Type : 1.Full 2.Summary : """""")
+    if pageLength == 1:
+        soup = fullPage(page)
+        print(soup)
+    else:
+        print(title)
+        print(""Page Id = "", pageId)
+        print(page.summary)
+        print(""Page Link = "", url)
+    # print ""References : "",references
+
+    pass
+
+
+# if __name__==""__main__"":
+#    wiki()
+",2129,56,53,15,10,10,11,,10,5,4,10.0,9,,15,36.52932501298081,55.506595772116384,2.2222222222222223,No,True,False,Low,id6
+pass_gen.py,"import string as str
+import secrets
+import random  # this is the module used to generate random numbers on your given range
+
+
+class PasswordGenerator:
+    @staticmethod
+    def gen_sequence(
+        conditions,
+    ):  # must have  conditions (in a list format), for each member of the list possible_characters
+        possible_characters = [
+            str.ascii_lowercase,
+            str.ascii_uppercase,
+            str.digits,
+            str.punctuation,
+        ]
+        sequence = """"
+        for x in range(len(conditions)):
+            if conditions[x]:
+                sequence += possible_characters[x]
+            else:
+                pass
+        return sequence
+
+    @staticmethod
+    def gen_password(sequence, passlength=8):
+        password = """".join((secrets.choice(sequence) for i in range(passlength)))
+        return password
+
+
+class Interface:
+    has_characters = {
+        ""lowercase"": True,
+        ""uppercase"": True,
+        ""digits"": True,
+        ""punctuation"": True,
+    }
+
+    @classmethod
+    def change_has_characters(cls, change):
+        try:
+            cls.has_characters[change]  # to check if the specified key exists in the dicitonary
+        except Exception as err:
+            print(f""Invalid \nan Exception: {err}"")
+        else:
+            cls.has_characters[change] = not cls.has_characters[change]  #automaticly changres to the oppesite value already there
+            print(f""{change} is now set to {cls.has_characters[change]}"")
+
+    @classmethod
+    def show_has_characters(cls):
+        print(cls.has_characters)  # print the output
+
+    def generate_password(self, lenght):
+        sequence = PasswordGenerator.gen_sequence(list(self.has_characters.values()))
+        print(PasswordGenerator.gen_password(sequence, lenght))
+
+
+def list_to_vertical_string(list):
+    to_return = """"
+    for member in list:
+        to_return += f""{member}\n""
+    return to_return
+
+
+class Run:
+    def decide_operation(self):
+        user_input = input("": "")
+        try:
+            int(user_input)
+        except:
+            Interface.change_has_characters(user_input)
+        else:
+            Interface().generate_password(int(user_input))
+        finally:
+            print(""\n\n"")
+
+    def run(self):
+        menu = f""""""Welcome to the PassGen App!
+Commands:
+    generate password ->
+    <lenght of the password>
+
+commands to change the characters to be used to generate passwords:
+{list_to_vertical_string(Interface.has_characters.keys())}
+            """"""
+        print(menu)
+        while True:
+            self.decide_operation()
+
+
+Run().run()
+",2587,58,75,16,5,0,0,8.0,28,3,2,5.0,5,,8,13.60964047443681,22.458839376460837,1.0,Yes,True,True,Low,id7
+demerge_pdfs.py,"""""""
+Python program to split large pdf(typically textbook) into small set of pdfs, maybe chapterwise
+to enhance the experience of reading and feasibility to study only specific parts from the large original textbook
+""""""
+
+
+import PyPDF2
+path = input()
+merged_pdf = open(path, mode='rb')
+
+
+pdf = PyPDF2.PdfFileReader(merged_pdf)
+
+(u, ctr, x) = tuple([0]*3)
+for i in range(1, pdf.numPages+1):
+
+    if u >= pdf.numPages:
+        print(""Successfully done!"")
+        exit(0)
+    name = input(""Enter the name of the pdf: "")
+    ctr = int(input(f""Enter the number of pages for {name}: ""))
+    u += ctr
+    if u > pdf.numPages:
+        print('Limit exceeded! ')
+        break
+
+    base_path = '/Users/darpan/Desktop/{}.pdf'
+    path = base_path.format(name)
+    f = open(path, mode='wb')
+    pdf_writer = PyPDF2.PdfFileWriter()
+
+    for j in range(x, x+ctr):
+        page = pdf.getPage(j)
+        pdf_writer.addPage(page)
+
+    x += ctr
+
+    pdf_writer.write(f)
+    f.close()
+
+
+merged_pdf.close()
+print(""Successfully done!"")
+",1014,28,27,12,0,0,4,0.0,0,7,4,14.0,7,,21,27.651484454403228,72.64806399138325,4.0,No,True,False,Low,id8
+Hangman.py,"# importing the time module
+import time
+
+# importing the random module
+import random
+
+# welcoming the user
+name = input(""What is your name? "")
+
+print(""\nHello, "" + name + ""\nTime to play hangman!\n"")
+
+# wait for 1 second
+time.sleep(1)
+
+print(""Start guessing...\nHint:It is a fruit"")
+time.sleep(0.5)
+
+someWords = """"""apple banana mango strawberry  
+orange grape pineapple apricot lemon coconut watermelon 
+cherry papaya berry peach lychee muskmelon""""""
+
+someWords = someWords.split("" "")
+# randomly choose a secret word from our ""someWords"" LIST.
+word = random.choice(someWords)
+
+# creates an variable with an empty value
+guesses = """"
+
+# determine the number of turns
+turns = 5
+
+# Create a while loop
+
+# check if the turns are more than zero
+while turns > 0:
+
+    # make a counter that starts with zero
+    failed = 0
+
+    # for every character in secret_word
+    for char in word:
+
+        # see if the character is in the players guess
+        if char in guesses:
+
+            # print then out the character
+            print(char, end="" "")
+
+        else:
+
+            # if not found, print a dash
+            print(""_"", end="" "")
+
+            # and increase the failed counter with one
+            failed += 1
+
+    # if failed is equal to zero
+
+    # print You Won
+    if failed == 0:
+        print(""\nYou won"")
+
+        # exit the script
+        break
+
+    print
+
+    # ask the user go guess a character
+    guess = input(""\nGuess a character:"")
+
+    # Validation of the guess
+    if not guess.isalpha():
+        print(""Enter only a LETTER"")
+        continue
+    elif len(guess) > 1:
+        print(""Enter only a SINGLE letter"")
+        continue
+    elif guess in guesses:
+        print(""You have already guessed that letter"")
+        continue
+
+    # set the players guess to guesses
+    guesses += guess
+
+    # if the guess is not found in the secret word
+    if guess not in word:
+
+        # turns counter decreases with 1 (now 9)
+        turns -= 1
+
+        # print wrong
+        print(""\nWrong"")
+
+        # how many turns are left
+        print(""You have"", +turns, ""more guesses\n"")
+
+        # if the turns are equal to zero
+        if turns == 0:
+
+            # print ""You Loose""
+            print(""\nYou Loose"")
+",2216,41,43,31,27,27,0,0.0,0,14,8,26.0,14,,40,77.30296890880645,178.37726474549189,7.428571428571429,No,True,True,Medium,id9
+primelib.py,"# -*- coding: utf-8 -*-
+""""""
+Created on Thu Oct  5 16:44:23 2017
+
+@author: Christian Bender
+
+This python library contains some useful functions to deal with
+prime numbers and whole numbers.
+
+Overview:
+
+isPrime(number)
+sieveEr(N)
+getPrimeNumbers(N)
+primeFactorization(number)
+greatestPrimeFactor(number)
+smallestPrimeFactor(number)
+getPrime(n)
+getPrimesBetween(pNumber1, pNumber2) 
+
+----
+
+isEven(number)
+isOdd(number)
+gcd(number1, number2)  // greatest common divisor
+kgV(number1, number2)  // least common multiple
+getDivisors(number)    // all divisors of 'number' inclusive 1, number
+isPerfectNumber(number)
+
+NEW-FUNCTIONS
+
+simplifyFraction(numerator, denominator)
+factorial (n) // n!
+fib (n) // calculate the n-th fibonacci term.
+
+-----
+
+goldbach(number)  // Goldbach's assumption
+
+""""""
+
+
+def pi(maxK=70, prec=1008, disp=1007):
+    """"""
+    maxK: nuber of iterations
+    prec: precision of decimal places
+    disp: number of decimal places shown
+    """"""
+    from decimal import Decimal as Dec, getcontext as gc
+
+    gc().prec = prec
+    K, M, L, X, S = 6, 1, 13591409, 1, 13591409
+    for k in range(1, maxK + 1):
+        M = Dec((K ** 3 - (K << 4)) * M / k ** 3)
+        L += 545140134
+        X *= -262537412640768000
+        S += Dec(M * L) / X
+        K += 12
+    pi = 426880 * Dec(10005).sqrt() / S
+    pi = Dec(str(pi)[:disp])
+    return pi
+
+
+def isPrime(number):
+    """"""
+    input: positive integer 'number'
+    returns true if 'number' is prime otherwise false.
+    """"""
+
+    # precondition
+    assert isinstance(number, int) and (
+        number >= 0
+    ), ""'number' must been an int and positive""
+
+    # 0 and 1 are none primes.
+    if number <= 3:
+        return number > 1
+    elif number % 2 == 0 or number % 3 == 0:
+        return False
+
+    i = 5
+    while i * i <= number:
+        if number % i == 0 or number % (i + 2) == 0:
+            return False
+        i += 6
+
+    return True
+
+
+# ------------------------------------------
+
+
+def sieveEr(N):
+    """"""
+    input: positive integer 'N' > 2
+    returns a list of prime numbers from 2 up to N.
+
+    This function implements the algorithm called
+    sieve of erathostenes.
+
+    """"""
+    from math import sqrt
+
+    # precondition
+    assert isinstance(N, int) and (N > 2), ""'N' must been an int and > 2""
+
+    primes = [True for x in range(N + 1)]
+
+    for p in range(2, int(sqrt(N)) + 1):
+        if primes[p]:
+            for i in range(p * p, N + 1, p):
+                primes[i] = False
+    primes[0] = False
+    primes[1] = False
+    ret = []
+    for p in range(N + 1):
+        if primes[p]:
+            ret.append(p)
+
+    return ret
+
+
+# --------------------------------
+
+
+def getPrimeNumbers(N):
+    """"""
+    input: positive integer 'N' > 2
+    returns a list of prime numbers from 2 up to N (inclusive)
+    This function is more efficient as function 'sieveEr(...)'
+    """"""
+
+    # precondition
+    assert isinstance(N, int) and (N > 2), ""'N' must been an int and > 2""
+
+    ans = []
+
+    # iterates over all numbers between 2 up to N+1
+    # if a number is prime then appends to list 'ans'
+    for number in range(2, N + 1):
+
+        if isPrime(number):
+            ans.append(number)
+
+    # precondition
+    assert isinstance(ans, list), ""'ans' must been from type list""
+
+    return ans
+
+
+# -----------------------------------------
+
+
+def primeFactorization(number):
+    """"""
+    input: positive integer 'number'
+    returns a list of the prime number factors of 'number'
+    """"""
+
+    # precondition
+    assert isinstance(number, int) and number >= 0, ""'number' must been an int and >= 0""
+
+    ans = []  # this list will be returns of the function.
+
+    # potential prime number factors.
+
+    factor = 2
+
+    quotient = number
+
+    if number == 0 or number == 1:
+
+        ans.append(number)
+
+    # if 'number' not prime then builds the prime factorization of 'number'
+    elif not isPrime(number):
+
+        while quotient != 1:
+
+            if isPrime(factor) and (quotient % factor == 0):
+                ans.append(factor)
+                quotient /= factor
+            else:
+                factor += 1
+
+    else:
+        ans.append(number)
+
+    # precondition
+    assert isinstance(ans, list), ""'ans' must been from type list""
+
+    return ans
+
+
+# -----------------------------------------
+
+
+def greatestPrimeFactor(number):
+    """"""
+    input: positive integer 'number' >= 0
+    returns the greatest prime number factor of 'number'
+    """"""
+
+    # precondition
+    assert isinstance(number, int) and (
+        number >= 0
+    ), ""'number' bust been an int and >= 0""
+
+    ans = 0
+
+    # prime factorization of 'number'
+    primeFactors = primeFactorization(number)
+
+    ans = max(primeFactors)
+
+    # precondition
+    assert isinstance(ans, int), ""'ans' must been from type int""
+
+    return ans
+
+
+# ----------------------------------------------
+
+
+def smallestPrimeFactor(number):
+    """"""
+    input: integer 'number' >= 0
+    returns the smallest prime number factor of 'number'
+    """"""
+
+    # precondition
+    assert isinstance(number, int) and (
+        number >= 0
+    ), ""'number' bust been an int and >= 0""
+
+    ans = 0
+
+    # prime factorization of 'number'
+    primeFactors = primeFactorization(number)
+
+    ans = min(primeFactors)
+
+    # precondition
+    assert isinstance(ans, int), ""'ans' must been from type int""
+
+    return ans
+
+
+# ----------------------
+
+
+def isEven(number):
+    """"""
+    input: integer 'number'
+    returns true if 'number' is even, otherwise false.
+    """"""
+
+    # precondition
+    assert isinstance(number, int), ""'number' must been an int""
+    assert isinstance(number % 2 == 0, bool), ""compare bust been from type bool""
+
+    return number % 2 == 0
+
+
+# ------------------------
+
+
+def isOdd(number):
+    """"""
+    input: integer 'number'
+    returns true if 'number' is odd, otherwise false.
+    """"""
+
+    # precondition
+    assert isinstance(number, int), ""'number' must been an int""
+    assert isinstance(number % 2 != 0, bool), ""compare bust been from type bool""
+
+    return number % 2 != 0
+
+
+# ------------------------
+
+
+def goldbach(number):
+    """"""
+    Goldbach's assumption
+    input: a even positive integer 'number' > 2
+    returns a list of two prime numbers whose sum is equal to 'number'
+    """"""
+
+    # precondition
+    assert (
+        isinstance(number, int) and (number > 2) and isEven(number)
+    ), ""'number' must been an int, even and > 2""
+
+    ans = []  # this list will returned
+
+    # creates a list of prime numbers between 2 up to 'number'
+    primeNumbers = getPrimeNumbers(number)
+    lenPN = len(primeNumbers)
+
+    # run variable for while-loops.
+    i = 0
+    j = 1
+
+    # exit variable. for break up the loops
+    loop = True
+
+    while i < lenPN and loop:
+
+        j = i + 1
+
+        while j < lenPN and loop:
+
+            if primeNumbers[i] + primeNumbers[j] == number:
+                loop = False
+                ans.append(primeNumbers[i])
+                ans.append(primeNumbers[j])
+
+            j += 1
+
+        i += 1
+
+    # precondition
+    assert (
+        isinstance(ans, list)
+        and (len(ans) == 2)
+        and (ans[0] + ans[1] == number)
+        and isPrime(ans[0])
+        and isPrime(ans[1])
+    ), ""'ans' must contains two primes. And sum of elements must been eq 'number'""
+
+    return ans
+
+
+# ----------------------------------------------
+
+
+def gcd(number1, number2):
+    """"""
+    Greatest common divisor
+    input: two positive integer 'number1' and 'number2'
+    returns the greatest common divisor of 'number1' and 'number2'
+    """"""
+
+    # precondition
+    assert (
+        isinstance(number1, int)
+        and isinstance(number2, int)
+        and (number1 >= 0)
+        and (number2 >= 0)
+    ), ""'number1' and 'number2' must been positive integer.""
+
+    rest = 0
+
+    while number2 != 0:
+        rest = number1 % number2
+        number1 = number2
+        number2 = rest
+
+    # precondition
+    assert isinstance(number1, int) and (
+        number1 >= 0
+    ), ""'number' must been from type int and positive""
+
+    return number1
+
+
+# ----------------------------------------------------
+
+
+def kgV(number1, number2):
+    """"""
+    Least common multiple
+    input: two positive integer 'number1' and 'number2'
+    returns the least common multiple of 'number1' and 'number2'
+    """"""
+
+    # precondition
+    assert (
+        isinstance(number1, int)
+        and isinstance(number2, int)
+        and (number1 >= 1)
+        and (number2 >= 1)
+    ), ""'number1' and 'number2' must been positive integer.""
+
+    ans = 1  # actual answer that will be return.
+
+    # for kgV (x,1)
+    if number1 > 1 and number2 > 1:
+
+        # builds the prime factorization of 'number1' and 'number2'
+        primeFac1 = primeFactorization(number1)
+        primeFac2 = primeFactorization(number2)
+
+    elif number1 == 1 or number2 == 1:
+
+        primeFac1 = []
+        primeFac2 = []
+        ans = max(number1, number2)
+
+    count1 = 0
+    count2 = 0
+
+    done = []  # captured numbers int both 'primeFac1' and 'primeFac2'
+
+    # iterates through primeFac1
+    for n in primeFac1:
+
+        if n not in done:
+
+            if n in primeFac2:
+
+                count1 = primeFac1.count(n)
+                count2 = primeFac2.count(n)
+
+                for i in range(max(count1, count2)):
+                    ans *= n
+
+            else:
+
+                count1 = primeFac1.count(n)
+
+                for i in range(count1):
+                    ans *= n
+
+            done.append(n)
+
+    # iterates through primeFac2
+    for n in primeFac2:
+
+        if n not in done:
+
+            count2 = primeFac2.count(n)
+
+            for i in range(count2):
+                ans *= n
+
+            done.append(n)
+
+    # precondition
+    assert isinstance(ans, int) and (
+        ans >= 0
+    ), ""'ans' must been from type int and positive""
+
+    return ans
+
+
+# ----------------------------------
+
+
+def getPrime(n):
+    """"""
+    Gets the n-th prime number.
+    input: positive integer 'n' >= 0
+    returns the n-th prime number, beginning at index 0
+    """"""
+
+    # precondition
+    assert isinstance(n, int) and (n >= 0), ""'number' must been a positive int""
+
+    index = 0
+    ans = 2  # this variable holds the answer
+
+    while index < n:
+
+        index += 1
+
+        ans += 1  # counts to the next number
+
+        # if ans not prime then
+        # runs to the next prime number.
+        while not isPrime(ans):
+            ans += 1
+
+    # precondition
+    assert isinstance(ans, int) and isPrime(
+        ans
+    ), ""'ans' must been a prime number and from type int""
+
+    return ans
+
+
+# ---------------------------------------------------
+
+
+def getPrimesBetween(pNumber1, pNumber2):
+    """"""
+    input: prime numbers 'pNumber1' and 'pNumber2'
+            pNumber1 < pNumber2
+    returns a list of all prime numbers between 'pNumber1' (exclusiv)
+            and 'pNumber2' (exclusiv)
+    """"""
+
+    # precondition
+    assert (
+        isPrime(pNumber1) and isPrime(pNumber2) and (pNumber1 < pNumber2)
+    ), ""The arguments must been prime numbers and 'pNumber1' < 'pNumber2'""
+
+    number = pNumber1 + 1  # jump to the next number
+
+    ans = []  # this list will be returns.
+
+    # if number is not prime then
+    # fetch the next prime number.
+    while not isPrime(number):
+        number += 1
+
+    while number < pNumber2:
+
+        ans.append(number)
+
+        number += 1
+
+        # fetch the next prime number.
+        while not isPrime(number):
+            number += 1
+
+    # precondition
+    assert (
+        isinstance(ans, list) and ans[0] != pNumber1 and ans[len(ans) - 1] != pNumber2
+    ), ""'ans' must been a list without the arguments""
+
+    # 'ans' contains not 'pNumber1' and 'pNumber2' !
+    return ans
+
+
+# ----------------------------------------------------
+
+
+def getDivisors(n):
+    """"""
+    input: positive integer 'n' >= 1
+    returns all divisors of n (inclusive 1 and 'n')
+    """"""
+
+    # precondition
+    assert isinstance(n, int) and (n >= 1), ""'n' must been int and >= 1""
+
+    ans = []  # will be returned.
+
+    for divisor in range(1, n + 1):
+
+        if n % divisor == 0:
+            ans.append(divisor)
+
+    # precondition
+    assert ans[0] == 1 and ans[len(ans) - 1] == n, ""Error in function getDivisiors(...)""
+
+    return ans
+
+
+# ----------------------------------------------------
+
+
+def isPerfectNumber(number):
+    """"""
+    input: positive integer 'number' > 1
+    returns true if 'number' is a perfect number otherwise false.
+    """"""
+
+    # precondition
+    assert isinstance(number, int) and (
+        number > 1
+    ), ""'number' must been an int and >= 1""
+
+    divisors = getDivisors(number)
+
+    # precondition
+    assert (
+        isinstance(divisors, list)
+        and (divisors[0] == 1)
+        and (divisors[len(divisors) - 1] == number)
+    ), ""Error in help-function getDivisiors(...)""
+
+    # summed all divisors up to 'number' (exclusive), hence [:-1]
+    return sum(divisors[:-1]) == number
+
+
+# ------------------------------------------------------------
+
+
+def simplifyFraction(numerator, denominator):
+    """"""
+    input: two integer 'numerator' and 'denominator'
+    assumes: 'denominator' != 0
+    returns: a tuple with simplify numerator and denominator.
+    """"""
+
+    # precondition
+    assert (
+        isinstance(numerator, int)
+        and isinstance(denominator, int)
+        and (denominator != 0)
+    ), ""The arguments must been from type int and 'denominator' != 0""
+
+    # build the greatest common divisor of numerator and denominator.
+    gcdOfFraction = gcd(abs(numerator), abs(denominator))
+
+    # precondition
+    assert (
+        isinstance(gcdOfFraction, int)
+        and (numerator % gcdOfFraction == 0)
+        and (denominator % gcdOfFraction == 0)
+    ), ""Error in function gcd(...,...)""
+
+    return (numerator // gcdOfFraction, denominator // gcdOfFraction)
+
+
+# -----------------------------------------------------------------
+
+
+def factorial(n):
+    """"""
+    input: positive integer 'n'
+    returns the factorial of 'n' (n!)
+    """"""
+
+    # precondition
+    assert isinstance(n, int) and (n >= 0), ""'n' must been a int and >= 0""
+
+    ans = 1  # this will be return.
+
+    for factor in range(1, n + 1):
+        ans *= factor
+
+    return ans
+
+
+# -------------------------------------------------------------------
+
+
+def fib(n):
+    """"""
+    input: positive integer 'n'
+    returns the n-th fibonacci term , indexing by 0
+    """"""
+
+    # precondition
+    assert isinstance(n, int) and (n >= 0), ""'n' must been an int and >= 0""
+
+    tmp = 0
+    fib1 = 1
+    ans = 1  # this will be return
+
+    for i in range(n - 1):
+        tmp = ans
+        ans += fib1
+        fib1 = tmp
+
+    return ans
+",14542,229,255,211,81,70,115,19.0,99,162,20,331.0,211,,493,1715.5904907149634,3870.912277418116,15.687203791469194,No,False,False,Very High,id10
+Quick sort.py,"def partition(arr, low, high):
+    i = low - 1  # index of smaller element
+    pivot = arr[high]  # pivot
+
+    for j in range(low, high):
+
+        # If current element is smaller than or
+        # equal to pivot
+        if arr[j] <= pivot:
+            # increment index of smaller element
+            i = i + 1
+            arr[i], arr[j] = arr[j], arr[i]
+
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return i + 1
+
+
+# The main function that implements QuickSort
+# arr[] --> Array to be sorted,
+# low  --> Starting index,
+# high  --> Ending index
+
+# Function to do Quick sort
+
+
+def quickSort(arr, low, high):
+    if len(arr) == 1:
+        return arr
+    if low < high:
+        # pi is partitioning index, arr[p] is now
+        # at right place
+        pi = partition(arr, low, high)
+
+        # Separately sort elements before
+        # partition and after partition
+        quickSort(arr, low, pi - 1)
+        quickSort(arr, pi + 1, high)
+
+
+# Driver code to test above
+arr = [10, 7, 8, 9, 1, 5]
+n = len(arr)
+quickSort(arr, 0, n - 1)
+print(""Sorted array is:"")
+for i in range(n):
+    print(""%d"" % arr[i]),
+",1112,22,22,11,15,13,0,2.0,6,12,6,24.0,14,,36,68.81274391313339,155.58941141594505,5.142857142857143,No,False,False,Low-Medium,id11
+paddle.py,"# ./PongPong/pong/paddle.py
+
+import pyglet
+from pyglet.window import key
+from typing import Tuple
+
+
+class Paddle(pyglet.shapes.Rectangle):
+    def __init__(self, *args, **kwargs):
+        super(Paddle, self).__init__(*args, **kwargs)
+
+        self.acc_left, self.acc_right = 0.0, 0.0
+        self.rightx = 0
+        self.key_handler = key.KeyStateHandler()
+        self.event_handlers = [self, self.key_handler]
+
+    def update(self, win_size: Tuple, border: float, other_object, dt):
+
+        newlx = self.x + self.acc_left
+        newrx = self.x + self.acc_right
+
+        if self.key_handler[key.LEFT]:
+            self.x = newlx
+        elif self.key_handler[key.RIGHT]:
+            self.x = newrx
+
+        self.rightx = self.x + self.width
+
+        if self.x < border:
+            self.x = border
+            self.rightx = self.x + self.width
+        elif self.rightx > win_size[0] - border:
+            self.x = win_size[0] - border - self.width
+            self.rightx = self.x + self.width
+",997,24,24,9,1,1,0,2.0,10,10,4,20.0,10,,30,41.21928094887362,114.22064766172812,4.0,Yes,False,False,Low,id12
+Voice Command Calculator.py,"import operator
+import speech_recognition as s_r
+print(""Your speech_recognition version is: ""+s_r.__version__)
+r = s_r.Recognizer()
+my_mic_device = s_r.Microphone(device_index=1)
+with my_mic_device as source:
+    print(""Say what you want to calculate, example: 3 plus 3"")
+    r.adjust_for_ambient_noise(source)
+    audio = r.listen(source)
+my_string=r.recognize_google(audio)
+print(my_string)
+def get_operator_fn(op):
+    return {
+        '+' : operator.add,
+        '-' : operator.sub,
+        'x' : operator.mul,
+        'divided' :operator.__truediv__,
+        'divided by' :operator.__truediv__,
+        'divide' :operator.__truediv__,
+        'Divided' :operator.__truediv__,
+        'Divided by' :operator.__truediv__,
+        'Divide' :operator.__truediv__,
+        'Mod' : operator.mod,
+        'mod' : operator.mod,
+        '^' : operator.xor,
+        }[op]
+
+def eval_binary_expr(op1, oper, op2):
+    op1,op2 = int(op1), int(op2)
+    return get_operator_fn(oper)(op1, op2)
+
+print(eval_binary_expr(*(my_string.split())))
+",1029,18,30,2,0,0,0,2.0,2,1,1,2.0,2,,3,2.0,4.754887502163469,0.5,No,False,False,Low,id13
+polygon.py,"import pygame
+import sys
+from pygame.locals import *
+
+pygame.init()
+window = pygame.display.set_mode((400, 300), 0, 32)
+pygame.display.set_caption(""Shape"")
+
+WHITE = (255, 255, 255)
+GREEN = (0, 255, 0)
+
+window.fill(WHITE)
+pygame.draw.polygon(window, GREEN, ((146, 0), (236, 277), (56, 277)))
+
+# Game logic
+while True:
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            pygame.quit()
+            sys.exit()
+    pygame.display.update()
+",462,16,16,4,1,1,0,0.0,0,1,1,2.0,2,,3,2.0,4.754887502163469,0.5,No,False,False,Low,id14
+webcam.py,"# Requirements:
+#     pip install numpy
+#     sudo apt-get install python-openCV
+# Program:
+#     opens your webcam, and records.
+
+import cv2
+
+cap = cv2.VideoCapture(0)
+
+# Obtain resolutions, convert resolutions from float to integer
+frames_width = int(cap.get(3))
+frames_height = int(cap.get(4))
+
+# Specify the video codec
+# FourCC is plateform dependent, however MJPG is a safe choice.
+fourcc = cv2.VideoWriter_fourcc(*""MJPG"")
+
+# Create video writer object. Save file to recording.avi
+out = cv2.VideoWriter(""recording.avi"", fourcc, 20.0, (frames_width, frames_height))
+
+while True:
+    # Capture frame-by-frame
+    ret, frame = cap.read()
+
+    if ret == True:
+
+        # Write frame to recording.avi
+        out.write(frame)
+
+        # Our operations on the frame come here
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+        # Display the resulting frame
+        cv2.imshow(""frame"", gray)
+        if cv2.waitKey(1) & 0xFF == ord(""q""):
+            break
+
+# When everything done, release the capture and video writer
+cap.release()
+out.release()
+cv2.destroyAllWindows()
+",1082,17,17,11,14,14,0,,0,3,2,6.0,6,,9,17.509775004326936,27.0,1.0,No,False,False,,id15
+binary_search_tree.py,"class Node:
+    """"""Class for node of a tree""""""
+
+    def __init__(self, info):
+        """"""Initialising a node""""""
+        self.info = info
+        self.left = None
+        self.right = None
+        # self.level = None
+
+    def __str__(self):
+        return str(self.info)
+
+    def __del__(self):
+        del self
+
+
+class BinarySearchTree:
+    """"""Class for BST""""""
+
+    def __init__(self):
+        """"""Initialising a BST""""""
+        self.root = None
+
+    def insert(self, val):
+        """"""Creating a BST with root value as val""""""
+        # Check if tree has root with None value
+        if self.root is None:
+            self.root = Node(val)
+        # Here the tree already has one root
+        else:
+            current = self.root
+            while True:
+                if val < current.info:
+                    if current.left:
+                        current = current.left
+                    else:
+                        current.left = Node(val)
+                        break
+                elif val > current.info:
+                    if current.right:
+                        current = current.right
+                    else:
+                        current.right = Node(val)
+                        break
+                else:
+                    break
+
+    def search(self, val, to_delete=False):
+        current = self.root
+        prev = -1
+        while current:
+            if val < current.info:
+                prev = current
+                current = current.left
+            elif val > current.info:
+                prev = current
+                current = current.right
+            elif current.info == val:
+                if not to_delete:
+                    return ""Match Found""
+                return prev
+            else:
+                break
+        if not to_delete:
+            return ""Not Found""
+
+    # Method to delete a tree-node if it exists, else error message will be returned.
+    def delete(self, val):
+        prev = self.search(val, True)
+        # Check if node exists
+        if prev is not None:
+            # Check if node is the Root node
+            if prev == -1:
+                temp = self.root.left
+                prev2 = None
+                while temp.right:
+                    prev2 = temp
+                    temp = temp.right
+                if prev2 is None:
+                    self.root.left = temp.left
+                    self.root.info = temp.info
+                else:
+                    prev2.right = None
+                    self.root.info = temp.info
+                print(""Deleted Root "", val)
+            # Check if node is to left of its parent
+            elif prev.left and prev.left.info == val:
+                # Check if node is leaf node
+                if prev.left.left is prev.left.right:
+                    prev.left = None
+                    print(""Deleted Node "", val)
+                # Check if node has child at left and None at right
+                elif prev.left.left and prev.left.right is None:
+                    prev.left = prev.left.left
+                    print(""Deleted Node "", val)
+                # Check if node has child at right and None at left
+                elif prev.left.left is None and prev.left.right:
+                    prev.left = prev.left.right
+                    print(""Deleted Node "", val)
+                # Here node to be deleted has 2 children
+                elif prev.left.left and prev.left.right:
+                    temp = prev.left
+                    while temp.right is not None:
+                        prev2 = temp
+                        temp = temp.right
+                    prev2.right = None
+                    prev.left.info = temp.info
+                    print(""Deleted Node "", val)
+                else:
+                    print(""Error Left"")
+
+            # Check if node is to right of its parent
+            elif prev.right.info == val:
+                flag = 0
+                # Check is node is a leaf node
+                if prev.right.left is prev.right.right:
+                    prev.right = None
+                    flag = 1
+                    print(""Deleted Node "", val)
+                # Check if node has left child at None at right
+                if prev.right and prev.right.left and prev.right.right is None:
+                    prev.right = prev.right.left
+                    print(""Deleted Node "", val)
+                # Check if node has right child at None at left
+                elif prev.right and prev.right.left is None and prev.right.right:
+                    prev.right = prev.right.right
+                    print(""Deleted Node "", val)
+                elif prev.right and prev.right.left and prev.right.right:
+                    temp = prev.right
+                    while temp.left is not None:
+                        prev2 = temp
+                        temp = temp.left
+                    prev2.left = None
+                    prev.right.info = temp.info
+                    print(""Deleted Node "", val)
+                else:
+                    if flag == 0:
+                        print(""Error"")
+        else:
+            print(""Node doesn't exists"")
+
+    def __str__(self):
+        return ""Not able to print tree yet""
+
+
+def is_bst(node, lower_lim=None, upper_lim=None):
+    """"""Function to find is a binary tree is a binary search tree.""""""
+    if lower_lim is not None and node.info < lower_lim:
+        return False
+    if upper_lim is not None and node.info > upper_lim:
+        return False
+    is_left_bst = True
+    is_right_bst = True
+    if node.left is not None:
+        is_left_bst = is_bst(node.left, lower_lim, node.info)
+    if is_left_bst and node.right is not None:
+        is_right_bst = is_bst(node.right, node.info, upper_lim)
+    return is_left_bst and is_right_bst
+
+
+def postorder(node):
+    # L R N : Left , Right, Node
+    if node is None:
+        return
+    if node.left:
+        postorder(node.left)
+    if node.right:
+        postorder(node.right)
+    print(node.info)
+
+
+def inorder(node):
+    # L N R : Left, Node , Right
+    if node is None:
+        return
+    if node.left:
+        inorder(node.left)
+    print(node.info)
+    if node.right:
+        inorder(node.right)
+
+
+def preorder(node):
+    # N L R : Node , Left, Right
+    if node is None:
+        return
+    print(node.info)
+    if node.left:
+        preorder(node.left)
+    if node.right:
+        preorder(node.right)
+
+
+# Levelwise
+def bfs(node):
+    queue = []
+    if node:
+        queue.append(node)
+    while queue != []:
+        temp = queue.pop(0)
+        print(temp.info)
+        if temp.left:
+            queue.append(temp.left)
+        if temp.right:
+            queue.append(temp.right)
+
+
+def preorder_itr(node):
+    # N L R : Node, Left , Right
+    stack = [node]
+    values = []
+    while stack != []:
+        temp = stack.pop()
+        print(temp.info)
+        values.append(temp.info)
+        if temp.right:
+            stack.append(temp.right)
+        if temp.left:
+            stack.append(temp.left)
+    return values
+
+
+def inorder_itr(node):
+    # L N R : Left, Node, Right
+    # 1) Create an empty stack S.
+    # 2) Initialize current node as root
+    # 3) Push the current node to S and set current = current->left until current is NULL
+    # 4) If current is NULL and stack is not empty then
+    #     a) Pop the top item from stack.
+    #     b) Print the popped item, set current = popped_item->right
+    #     c) Go to step 3.
+    # 5) If current is NULL and stack is empty then we are done.
+    stack = []
+    current = node
+    while True:
+        if current != None:
+            stack.append(current)  # L
+            current = current.left
+        elif stack != []:
+            temp = stack.pop()
+            print(temp.info)  # N
+            current = temp.right  # R
+        else:
+            break
+
+
+def postorder_itr(node):
+    # L R N
+    # 1. Push root to first stack.
+    # 2. Loop while first stack is not empty
+    # 2.1 Pop a node from first stack and push it to second stack
+    # 2.2 Push left and right children of the popped node to first stack
+    # 3. Print contents of second stack
+    s1, s2 = [node], []
+    while s1 != []:
+        temp = s1.pop()
+        s2.append(temp)
+        if temp.left:
+            s1.append(temp.left)
+        if temp.right:
+            s1.append(temp.right)
+    print(*(s2[::-1]))
+
+
+def bst_frm_pre(pre_list):
+    box = Node(pre_list[0])
+    if len(pre_list) > 1:
+        if len(pre_list) == 2:
+            if pre_list[1] > pre_list[0]:
+                box.right = Node(pre_list[1])
+            else:
+                box.left = Node(pre_list[1])
+        else:
+            all_less = False
+            for i in range(1, len(pre_list)):
+                if pre_list[i] > pre_list[0]:
+                    break
+            else:
+                all_less = True
+            if i != 1:
+                box.left = bst_frm_pre(pre_list[1:i])
+            if not all_less:
+                box.right = bst_frm_pre(pre_list[i:])
+    return box
+
+
+# Function to find the lowest common ancestor of nodes with values c1 and c2.
+# It return value in the lowest common ancestor, -1 indicates value returned for None.
+# Note that both values v1 and v2 should be present in the bst.
+def lca(t_node, c1, c2):
+    if c1 == c2:
+        return c1
+    current = t_node
+    while current:
+        if c1 < current.info and c2 < current.info:
+            current = current.left
+        elif c1 > current.info and c2 > current.info:
+            current = current.right
+        else:
+            return current.info
+    return -1
+
+
+# Function to print element vertically which lie just below the root node
+def vertical_middle_level(t_node):
+    e = (t_node, 0)  # 0 indicates level 0, to left we have -ve and to right +ve
+    queue = [e]
+    ans = []
+    # Do a level-order traversal and assign level-value to each node
+    while queue != []:
+        temp, level = queue.pop(0)
+        if level == 0:
+            ans.append(str(temp.info))
+        if temp.left:
+            queue.append((temp.left, level - 1))
+        if temp.right:
+            queue.append((temp.right, level + 1))
+    return "" "".join(ans)
+
+
+def get_level(n, val):
+    c_level = 0
+
+    while n.info != val:
+        if val < n.info:
+            n = n.left
+        elif val > n.info:
+            n = n.right
+        c_level += 1
+        if n is None:
+            return -1
+
+    return c_level
+
+
+def depth(node):
+    if node is None:
+        return 0
+    l_depth, r_depth = 0, 0
+    if node.left:
+        l_depth = depth(node.left)
+    if node.right:
+        r_depth = depth(node.right)
+    # print(node.info, l_depth, r_depth)
+    return 1 + max(l_depth, r_depth)
+
+
+t = BinarySearchTree()
+t.insert(10)
+t.insert(5)
+t.insert(15)
+t.insert(3)
+t.insert(1)
+t.insert(0)
+t.insert(2)
+t.insert(7)
+t.insert(12)
+t.insert(18)
+t.insert(19)
+print(depth(t.root))
+# inorder(t.root)
+# print()
+# print(t.search(5))
+# t.delete(7)
+# t.delete(5)
+# t.delete(3)
+# t.delete(15)
+# inorder(t.root)
+# print()
+# t.delete(2)
+# t.delete(3)
+# t.delete(7)
+# t.delete(19)
+# t.delete(1)
+# inorder(t.root)
+# b = BinarySearchTree()
+# b.root = bst_frm_pre(preorder_itr(t.root))
+# print(preorder_itr(b.root) == preorder_itr(t.root))
+# print(lca(t.root, 3, 18))
+# print(vertical_middle_level(t.root))
+# print(get_level(t.root, 1))
+",11266,282,273,41,66,68,0,21.0,127,76,11,147.0,87,,223,598.5898319438497,1475.0802952376916,9.29310344827586,Yes,False,False,Very High,id16
+prime number.py,"# Program to check if a number is prime or not
+
+num = 409
+
+# To take input from the user
+#num = int(input(""Enter a number: ""))
+
+# prime numbers are greater than 1
+if num > 1:
+   # check for factors
+   for i in range(2,num):
+       if (num % i) == 0:
+           print(num,""is not a prime number"")
+           print(i,""times"",num//i,""is"",num)
+           break
+   else:
+       print(num,""is a prime number"")
+       
+# if input number is less than
+# or equal to 1, it is not prime
+else:
+   print(num,""is not a prime number"")
+",520,11,11,4,7,7,0,0.0,0,4,4,8.0,5,,12,19.60964047443681,38.03910001730775,3.2,No,True,False,Low,id17
+GamesCalender.py,"
+from tkinter import *
+from tkcalendar import Calendar
+import tkinter as tk
+
+
+window = tk.Tk()
+
+# Adjust size
+window.geometry(""600x500"")
+
+gameList =[""Game List:""]
+# Change the label text
+def show():
+    game = selected1.get() + "" vs "" + selected2.get()+"" on ""+cal.get_date()
+    gameList.append(game)
+    #print(gameList)
+    gameListshow = ""\n"".join(gameList)
+    #print(gameList)
+    label.config(text=gameListshow)
+
+
+# Dropdown menu options
+options = [
+    ""Team 1"",
+    ""Team 2"",
+    ""Team 3"",
+    ""Team 4"",
+    ""Team 5"",
+    ""Team 6""
+]
+
+# datatype of menu text
+selected1 = StringVar()
+selected2 = StringVar()
+
+# initial menu text
+selected1.set(""Team 1"")
+selected2.set(""Team 2"")
+
+# Create Dropdown menu
+L1 = Label(window, text=""Visitor"")
+L1.place(x=40, y=35)
+drop1 = OptionMenu(window, selected1, *options)
+drop1.place(x=100, y=30)
+
+L2 = Label(window, text=""VS"")
+L2.place(x=100, y=80)
+
+L3 = Label(window, text=""Home"")
+L3.place(x=40, y=115)
+drop2 = OptionMenu(window, selected2, *options)
+drop2.place(x=100, y=110)
+
+# Add Calendar
+cal = Calendar(window, selectmode='day',
+               year=2022, month=12,
+               day=1)
+
+cal.place(x=300, y=20)
+
+
+
+# Create button, it will change label text
+button = Button( window, text=""Add to calender"", command=show).place(x=100,y=200)
+
+# Create Label
+label = Label(window, text="" "")
+label.place(x=150, y=250)
+
+window.mainloop()",1447,32,41,19,11,11,0,1.0,1,4,1,8.0,8,,12,24.0,38.03910001730775,0.5,No,False,False,Low,id18
+Guessing_Game.py,"from random import randint
+from time import sleep
+
+
+def guessing_game(GUESS_RANGE, GUESS_LIMIT):
+    # Set the initial values.
+    RANDOM = randint(1, GUESS_RANGE)
+    GUESS = int(input(""What is your guess? ""))
+    ATTEMPTS_ALLOWED = GUESS_LIMIT
+    done = False
+
+    # Validate the inputted guess.
+    GUESS = InputValidation(GUESS, GUESS_RANGE)
+
+    # Now we have a valid guess.
+    while GUESS_LIMIT > 0 and not done:
+        GUESS_LIMIT -= 1  # Take one guess = lose one chance
+        if GUESS_LIMIT > 0:
+            if GUESS < RANDOM:
+                print(f""It should be higher than {GUESS}."")
+            elif GUESS > RANDOM:
+                print(f""It should be lower than {GUESS}."")
+            else:
+                ATTEMPTS_TOOK = ATTEMPTS_ALLOWED - GUESS_LIMIT
+                print(f""You nailed it! And it only took you {ATTEMPTS_TOOK} attempts."")
+                done = True
+            if GUESS_LIMIT > 0 and not done:
+                print(f""You still have {GUESS_LIMIT} chances left.\n"")
+                GUESS = int(input(""Try a new guess: ""))
+                # Another input validation loop.
+                GUESS = InputValidation(GUESS, GUESS_RANGE)
+        elif GUESS_LIMIT == 0 and not done:  # Last chance to guess
+            if GUESS == RANDOM:
+                print(
+                    f""You nailed it! However, it took you all the {ATTEMPTS_ALLOWED} attempts.""
+                )
+            else:
+                print(
+                    f""GAME OVER! It took you more than {ATTEMPTS_ALLOWED} attempts. ""
+                    f""The correct number is {RANDOM}.""
+                )
+
+
+def InputValidation(GUESS, GUESS_RANGE):
+    while not 1 <= GUESS <= GUESS_RANGE:
+        print(""TRY AGAIN! Your guess is out of range!\n"")
+        GUESS = int(input(""What is your guess? ""))
+    return GUESS
+
+
+def easy():
+    print(""You are to guess a number between 1 and 10 in no more than 6 attempts."")
+    guessing_game(10, 6)
+
+
+def medium():
+    print(""You are to guess a number between 1 and 20 in no more than 4 attempts."")
+    guessing_game(20, 4)
+
+
+def hard():
+    print(""You are to guess a number between 1 and 50 in no more than 3 attempts."")
+    guessing_game(50, 3)
+
+
+def try_again():
+    print()
+    again = input(""Do you want to play again? (yes/no) "")
+    if again.lower() in [""y"", ""yes""]:
+        welcome()
+    elif again.lower() in [""n"", ""no""]:
+        print(""Thanks for playing the game"")
+    else:
+        print(""INVALID VALUE"")
+        try_again()
+
+
+def welcome():
+    print(""Hello, Welcome to the Guessing Game!"")
+    name = input(""I'm Geek! What's Your Name? "")
+    sleep(1)
+
+    print(f""Okay, {name}. Let's Begin The Guessing Game!"")
+    print(
+        ""Choose a level:"",
+        ""1. Easy"",
+        ""2. Medium"",
+        ""3. Hard"",
+        sep=""\n"",
+    )
+    sleep(1)
+    level = int(input(""Pick a number: ""))
+    print()
+    sleep(1)
+    if level == 1:
+        easy()
+        try_again()
+    elif level == 2:
+        medium()
+        try_again()
+    elif level == 3:
+        hard()
+        try_again()
+    else:
+        print(""INVALID VALUE! Please try again.\n"")
+        welcome()
+
+
+welcome()
+",3129,75,86,19,6,4,0,7.0,23,23,8,41.0,25,,64,140.0964047443681,322.841223638941,6.56,No,True,False,Medium-High,id19
+create password validity in python.py,"import time
+pwd=input(""Enter your password: "")    #any password u want to set
+
+def IInd_func():
+  count1=0
+  for j in range(5):
+    a=0
+    count=0
+    user_pwd = input(""Enter remember password: "")        #password you remember
+    for i in range(len(pwd)):
+      if user_pwd[i] == pwd[a]:       #comparing remembered pwd with fixed pwd
+        a +=1
+        count+=1 
+    if count==len(pwd):
+      print(""correct pwd"")
+      break
+    else:
+      count1 += 1
+      print(""not correct"")
+  if count1==5:
+    time.sleep(30)
+    IInd_func()
+
+IInd_func()",573,22,22,2,3,0,0,1.0,6,6,2,12.0,8,,18,26.0,59.794705707972525,1.5,No,True,False,Low,id20
+koch curve.py,"# importing the libraries
+# turtle standard graphics library for python
+import turtle
+
+
+# function to create koch snowflake or koch curve
+def snowflake(lengthSide, levels):
+    if levels == 0:
+        t.forward(lengthSide)
+        return
+    lengthSide /= 3.0
+    snowflake(lengthSide, levels - 1)
+    t.left(60)
+    snowflake(lengthSide, levels - 1)
+    t.right(120)
+    snowflake(lengthSide, levels - 1)
+    t.left(60)
+    snowflake(lengthSide, levels - 1)
+
+
+# main function
+if __name__ == ""__main__"":
+    t = turtle.Pen()
+    t.speed(0)  # defining the speed of the turtle
+    length = 300.0  #
+    t.penup()  # Pull the pen up â no drawing when moving.
+    # Move the turtle backward by distance, opposite to the direction the turtle is headed.
+    # Do not change the turtleâs heading.
+    t.backward(length / 2.0)
+    t.pendown()
+    for i in range(3):
+        # Pull the pen down â drawing when moving.
+        snowflake(length, 4)
+        t.right(120)
+    # To control the closing windows of the turtle
+    # mainloop()
+",1070,23,23,4,12,9,0,1.0,2,8,3,16.0,9,,24,33.28421251514428,86.03910001730776,2.6666666666666665,No,False,False,Low,id21
+Update a binary file2.py,"# updating records in a binary file
+
+import pickle
+
+
+def update():
+
+    with open(""studrec.dat"", ""rb+"") as File:
+        value = pickle.load(File)
+        found = False
+        roll = int(input(""Enter the roll number of the record""))
+        
+        for i in value:
+            if roll == i[0]:
+                print(f""current name {i[1]}"")
+                print(f""current marks {i[2]}"")
+                i[1] = input(""Enter the new name"")
+                i[2] = int(input(""Enter the new marks""))
+                found = True
+
+        if not found:
+            print(""Record not found"")
+
+        else:
+            pickle.dump(value, File)
+            File.seek(0)
+            print(pickle.load(File))
+
+
+update()
+",742,20,20,9,1,1,0,1.0,4,2,2,3.0,3,,5,6.754887502163469,11.60964047443681,1.0,No,True,False,Low,id22
+Caesar Cipher Encoder  & Decoder.py,"# PROJECT1
+# CAESAR CIPHER ENCODER/DECODER
+
+# Author: InTruder
+# Cloned from: https://github.com/InTruder-Sec/caesar-cipher
+
+# Improved by: OfficialAhmed (https://github.com/OfficialAhmed)
+
+def get_int() -> int:
+    """"""
+    Get integer, otherwise redo
+    """"""
+
+    try:
+        key = int(input(""Enter number of characters you want to shift: ""))
+    except:
+        print(""Enter an integer"")
+        key = get_int()
+
+    return key
+
+def main():
+
+    print(""[>] CAESAR CIPHER DECODER!!! \n"")
+    print(""[1] Encrypt\n[2] Decrypt"")
+
+    match input(""Choose one of the above(example for encode enter 1): ""):
+
+        case ""1"":
+            encode()
+
+        case ""2"":
+            decode()
+
+        case _:
+            print(""\n[>] Invalid input. Choose 1 or 2"")
+            main()
+
+
+def encode():
+
+    encoded_cipher = """"
+    text = input(""Enter text to encode: "")
+    key = get_int()
+        
+    for char in text:
+        
+        ascii = ord(char) + key
+        encoded_cipher += chr(ascii)
+
+    print(f""Encoded text: {encoded_cipher}"")
+
+
+def decode():
+
+    decoded_cipher = """"
+    cipher = input(""\n[>] Enter your cipher text: "")
+    key = get_int()
+
+    for character in cipher:
+        ascii = ord(character) - key
+        decoded_cipher += chr(ascii)
+
+    print(decoded_cipher)
+
+
+if __name__ == '__main__':
+    main()
+",1319,37,36,24,5,5,3,4.0,9,5,3,10.0,10,,15,37.97416845103709,55.506595772116384,1.5,No,True,False,Low,id23
+Binary_search.py,"# It returns location of x in given array arr
+# if present, else returns -1
+def binary_search(arr, l, r, x):
+    # Base case: if left index is greater than right index, element is not present
+    if l > r:
+        return -1
+
+    # Calculate the mid index
+    mid = (l + r) // 2
+
+    # If element is present at the middle itself
+    if arr[mid] == x:
+        return mid
+
+    # If element is smaller than mid, then it can only be present in left subarray
+    elif arr[mid] > x:
+        return binary_search(arr, l, mid - 1, x)
+
+    # Else the element can only be present in right subarray
+    else:
+        return binary_search(arr, mid + 1, r, x)
+
+
+# Main Function
+if __name__ == ""__main__"":
+    # User input array
+    arr = [int(x) for x in input(""Enter the array with elements separated by commas: "").split("","")]
+
+    # User input element to search for
+    x = int(input(""Enter the element you want to search for: ""))
+
+    # Function call
+    result = binary_search(arr, 0, len(arr) - 1, x)
+
+    # printing the output
+    if result != -1:
+        print(""Element is present at index {}"".format(result))
+    else:
+        print(""Element is not present in array"")
+",1162,18,18,9,12,12,0,1.0,4,12,7,22.0,15,,34,78.25484338853101,151.6206750336681,5.133333333333334,No,True,False,Low-Medium,id24
